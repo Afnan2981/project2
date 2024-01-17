@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'user',
     'listing',
     'pages',
+    'leMajordome', 
 ]
 
 MIDDLEWARE = [
