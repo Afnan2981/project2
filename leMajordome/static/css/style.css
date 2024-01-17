@@ -1,0 +1,112 @@
+nav.navbar {
+  background-color: transparent; /* Set background color to transparent */
+  padding: 0; /* Remove default padding */
+  position: absolute; /* Position navbar absolutely */
+  width: 100%; /* Make the navbar full-width */
+  z-index: 1000; /* Ensure the navbar is above other elements */
+}
+
+/* Optional: Add styles for the links if needed */
+nav.navbar a.nav-link {
+  color: white;
+}
+
+/* Optional: Add styles for the active link if needed */
+nav.navbar a.nav-link.active {
+  color: #d4a45f; /* Change the color for the active link */
+}
+
+/* Add margin to the showcase to push content below the navbar */
+#showcase {
+  margin-top: 56px; /* Adjust the margin to match your navbar height */
+}
+
+/* Style the image within the showcase */
+#showcase img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Maintain the image's aspect ratio */
+}
+nav.navbar.home {
+background-color: transparent;
+padding: 0;
+position: absolute;
+width: 100%;
+z-index: 1000;
+}
+nav.navbar.other-pages {
+background-color: white;
+padding: 15px; /* Add padding for better visibility, adjust as needed */
+position: fixed;
+width: 100%;
+z-index: 1000;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+nav.navbar.other-pages a.nav-link {
+color: black;
+}
+
+/* Optional: Add styles for the active link on other pages */
+nav.navbar.other-pages a.nav-link.active {
+color: #d4a45f;
+}
+
+/* Add margin to the showcase to push content below the navbar on other pages */
+#showcase.other-pages {
+margin-top: 56px;
+}
+
+/* Style the image within the showcase on other pages */
+#showcase.other-pages img {
+width: 100%;
+height: auto;
+}
+nav.navbar.about-navbar {
+background-color: white;
+padding: 15px;
+position: fixed;
+width: 100%;
+z-index: 1000;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav.navbar.about-navbar a.nav-link {
+color: black;
+}
+
+/* Optional: Add styles for the active link on the services page */
+nav.navbar.about-navbar a.nav-link.active {
+color: #d4a45f;
+}
+
+/* Add this to your existing CSS */
+
+/* Custom styles for the navbar on the About page */
+nav.navbar.about-page {
+background-color: white;
+padding: 15px;
+position: fixed;
+width: 100%;
+z-index: 1000;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav.navbar.about-page a.nav-link {
+color: black;
+}
+
+/* Optional: Add styles for the active link on the About page */
+nav.navbar.about-page a.nav-link.active {
+color: #d4a45f;
+}
+
+/* Add margin to the showcase to push content below the navbar on the About page */
+#showcase.about-page {
+margin-top: 56px;
+}
+
+/* Style the image within the showcase on the About page */
+#showcase.about-page img {
+width: 100%;
+height: auto;
+}

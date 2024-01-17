@@ -1,0 +1,299 @@
+{% extends 'base.html' %} 
+
+{% load humanize %}
+{% load static %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+<style>
+ html, body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  line-height: inherit;
+
+  margin: 0;
+  padding: 0;
+}
+*, :after, :before {
+    /* border: 0 solid #eaeaea; */
+    box-sizing: border-box;
+}
+
+/* Background styling for the #showcase section */
+#showcase {
+  position: relative;
+  background-image: url('{% static "img/tour.jpeg" %}');
+  background-size: cover;
+  background-position: center;
+  background-attachment: local; /* Keeps the background fixed when scrolling */
+  height: calc(100vh - 56px); /* Set the height to the viewport height minus the navigation bar height */
+  margin: 0; /* Reset margin */
+  padding: 0; /* Reset padding */
+}
+
+/* Dark overlay for the #showcase section */
+#showcase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value to control darkness */
+  z-index: 1; /* Place the overlay above the background image */
+}
+
+
+/* Style the image within the showcase */
+#showcase img {
+  width: 100%; /* Make the image fill the container */
+  height: auto; /* Maintain the image's aspect ratio */
+  position: relative; /* Set the position to relative for z-index to work */
+  z-index: 2; /* Place the image above the overlay */
+}
+
+/* Adjust the margin-top for the container inside the showcase */
+#showcase .container {
+  margin-top: 0;
+
+  
+}
+#showcase .overlay-content {
+  position: relative;
+  z-index: 3; /* Place the content above the overlay */
+  color: white; /* Set text color to white */
+}
+
+#showcase .overlay-content {
+  position: relative;
+  z-index: 2; /* Place the content above the overlay */
+  color: white; /* Set text color to white */
+}
+
+#showcase h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  color: white; /* Set text color to white */
+  z-index: 3; /* Place the h1 above the overlay */
+  height: 3em; /* Set a fixed height for the h1, adjust as needed */
+  line-height: 1.5em; /* Set line height, adjust as needed */
+  overflow: hidden; /* Hide overflow if the content is too long */
+  font-family: LeituraTwo,"serif";
+  
+}
+
+h1{
+  font-family: LeituraTwo,"serif"; 
+}
+p{
+  font-family: LeituraTwo,"serif"; 
+}
+#about-us {
+  background-color: #f8f9fa; /* Set background color */
+  padding: 50px 0; /* Add padding to the section */
+  font-family: LeituraTwo,"serif"; 
+}
+
+#about-us h2 {
+  color: #000000; /* Set heading color */
+  font-family: LeituraTwo,"serif"; 
+}
+
+#about-us p {
+  font-size: 18px; /* Set font size for paragraphs */
+  line-height: 1.6; /* Set line height for paragraphs */
+  color: #000000; /* Set text color */
+  font-family: LeituraTwo,"serif"; 
+}
+
+</style>
+
+<!-- Showcase -->
+
+
+
+<section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4" >
+            Create lasting memories for<br> an unforgettable holiday getaway
+          </h1>
+
+        </div>
+
+      </div>
+    </div>
+</section>
+<br>
+<!-- Alerts -->
+
+<!-- Listings -->
+<section id="listings" class="py-5">
+    <div class="container">
+      <h1 class="text-center mb-3">Latest Listings</h1>
+      <div id="listings-container" class="row">
+        {% if listings %}
+          {% for listing in listings %}
+            <!-- Listing 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card listing-preview">
+                <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
+                <div class="card-img-overlay">
+                  
+                  <h2>
+                    <span class="badge badge-secondary text-white">${{ listing.price | intcomma }}</span>
+                  </h2>
+                </div>
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-primary">{{ listing.title }}</h4>
+                    <p>
+                      <i class="fas fa-map-marker text-secondary"></i> {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}</p>
+                  </div>
+                  <hr>
+                  <div class="row py-2 text-secondary">
+                    <div class="col-6">
+                      <i class="fas fa-th-large"></i> Sqft: {{ listing.sqft }}</div>
+                    <div class="col-6">
+                      <i class="fas fa-car"></i> Garage: {{ listing.garage }}</div>
+                  </div>
+                  <div class="row py-2 text-secondary">
+                    <div class="col-6">
+                      <i class="fas fa-bed"></i> Bedrooms: {{ listing.bedrooms }}</div>
+                    <div class="col-6">
+                      <i class="fas fa-bath"></i> Bathrooms: {{ listing.bathrooms }}</div>
+                  </div>
+                  <hr>
+                  <div class="row py-2 text-secondary">
+                    <div class="col-6">
+                      <i class="fas fa-user"></i> {{ listing.realtor }}</div>
+                  </div>
+                  <div class="row text-secondary pb-2">
+                    <div class="col-6">
+                      <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
+                  </div>
+                  <hr>
+                  <a href="{% url 'listing_detail'  %}" class="btn btn-primary btn-block">More Info</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p > No Listings Available</p>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+</section>
+<section id="about-us">
+  <div class="container">
+    <h2 class="text-center mb-4">Who are we ?</h2>
+    <p>
+      An expert and experienced team in the field of short-term rental management. Our presence in the real estate sector for more than 15 years gives us know-how and legitimacy to offer our services.
+    </p>
+    <h2 class="text-center mb-4">Our philosophy</h2>
+    <p>
+      Located in the heart of Paris, Le Majordome enjoys a national and international dimension thanks to an excellent network in the real estate sector.
+       We design and practice this profession with passion. A passion that we put at your service to support you.
+       We are always and above all attentive to your needs in order to take into consideration and understand your requests, to better analyze your specific personalized needs, with the greatest discretion.
+    </p>
+    <h2 class="text-center mb-4">Our services</h2>
+    <!-- Add the list of services here -->
+    <ul>
+      <li>Short term rental</li>
+      <li>Maintenance coordination</li>
+      <li>Rental Mobility lease</li>
+      <!-- Add more services as needed -->
+    </ul>
+    <!-- ... other content ... -->
+  </div>
+</section>
+
+
+<section id="services" class="py-5 bg-dark text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Consulting Services</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>Property Management</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Renting & Selling</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+      </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Function to make the API call
+    function getListings() {
+      $.ajax({
+        url: '/api/listing/get-listings/',  // Update the URL to your API endpoint
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          // Handle the success response
+          displayListings(data.listings);
+        },
+        error: function(error) {
+          // Handle the error
+          console.error('Error fetching listings:', error);
+        }
+      });
+    }
+
+    // Function to display the listings on the page
+    function displayListings(listings) {
+      var listingsContainer = $('#listings-container');
+
+      // Clear existing listings
+      listingsContainer.empty();
+
+      // Check if there are listings
+      if (listings.length > 0) {
+        // Loop through each listing and append it to the container
+        for (var i = 0; i < listings.length; i++) {
+          var listing = listings[i];
+          var listingHTML = '<div class="col-md-6 col-lg-4 mb-4">';
+          // Add your HTML structure for each listing, using the listing object properties
+          // Example: listingHTML += '<h2>' + listing.title + '</h2>';
+          // Add more HTML properties as needed
+          listingHTML += '</div>';
+          listingsContainer.append(listingHTML);
+        }
+      } else {
+        // Display a message if there are no listings
+        listingsContainer.html('<p>No listings available</p>');
+      }
+    }
+
+    // Call the function to get listings when the page loads
+    getListings();
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | Browse Property Listings {% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row" id="listings-container">
+    <!-- Listings will be dynamically added here by JavaScript -->
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <ul class="pagination" id="pagination-container">
+        <!-- Pagination will be dynamically added here by JavaScript -->
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Use fetch or Axios to get data from the backend
+  const csrfToken = "{{ csrf_token }}";
+  const listingsContainer = document.getElementById("listings-container");
+  const paginationContainer = document.getElementById("pagination-container");
+
+  fetch("{% url 'get_listings' %}", {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': csrfToken
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.listings && data.listings.length > 0) {
+        // Clear existing content
+        listingsContainer.innerHTML = "";
+
+        // Loop through the listings and create HTML elements
+        data.listings.forEach(listing => {
+          const listingCard = document.createElement("div");
+          listingCard.className = "col-md-6 col-lg-4 mb-4";
+
+          listingCard.innerHTML = `
+            <div class="card listing-card">
+              <div id="carousel${listing.id}" class="carousel slide" data-ride="carousel">
+                <!-- Your carousel inner content here -->
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">${listing.title}</h5>
+                <p class="card-text">${listing.realtor}</p>
+                <p class="card-text"><strong>$${listing.price.toLocaleString()}</strong></p>
+                <a href="{% url 'listing_detail' slug=listing.slug %}" class="btn btn-primary btn-block">More Info</a>
+              </div>
+            </div>
+          `;
+
+          listingsContainer.appendChild(listingCard);
+        });
+
+        // Add pagination dynamically
+        if (data.pagination && data.pagination.pages > 1) {
+          paginationContainer.innerHTML = "";
+          for (let i = 1; i <= data.pagination.pages; i++) {
+            const pageItem = document.createElement("li");
+            pageItem.className = `page-item ${data.pagination.current_page === i ? 'active' : ''}`;
+            const pageLink = document.createElement("a");
+            pageLink.className = "page-link";
+            pageLink.href = `?page=${i}`;
+            pageLink.textContent = i;
+            pageItem.appendChild(pageLink);
+            paginationContainer.appendChild(pageItem);
+          }
+        }
+      } else {
+        // No listings available
+        listingsContainer.innerHTML = "<div class='col-md-12'><p>No Listings Available</p></div>";
+      }
+    })
+    .catch(error => console.error('Error fetching data:', error));
+</script>
+
+{% endblock %}

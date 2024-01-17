@@ -1,0 +1,193 @@
+{% load static %}
+<!-- Navbar -->
+<!---->
+<!-- Debugging -->
+
+<!-- Add this line to include your custom file -->
+
+
+<!-- Navbar -->
+<style>
+  /* Custom styles for the navbar */
+  nav.navbar {
+    background-color: transparent; /* Set background color to transparent */
+    padding: 0; /* Remove default padding */
+    position: absolute; /* Position navbar absolutely */
+    width: 100%; /* Make the navbar full-width */
+    z-index: 1000; /* Ensure the navbar is above other elements */
+  }
+
+  
+  /* Optional: Add styles for the active link if needed */
+  nav.navbar a.nav-link.active {
+    color: #d4a45f; /* Change the color for the active link */
+  }
+
+  nav.navbar.home {
+  background-color: transparent;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+nav.navbar.other-pages {
+  background-color: black;
+  padding: 15px; /* Add padding for better visibility, adjust as needed */
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+
+
+
+
+  nav.navbar.homeB {
+      background-color: transparent;
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      z-index: 1000;
+  }
+
+  /* Styles for the black navbar on other pages */
+  nav.navbar.other-pagesB {
+      background-color: #d4a45f;
+      padding: 0;
+      position: absolute;
+      width: 100%;
+      z-index: 1000;
+
+  }
+  .font-weight-bold {
+     font-weight: 500 !important; 
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(159, 154, 154, 0.5);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+i {
+    font-style: normal; /* Set font-style to normal to remove italic */
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+/* Add any additional styling as needed */
+
+
+</style>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-dark {% if request.path == '/' %} homeB {% else %} other-pagesB {% endif %}">
+    
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'img/LogoLeMajordome.png' %}" class="logo" alt="logo" height="90">
+    </a>
+    
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto" >
+          
+          <li
+            {% if 'about' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item mr-3"
+            {% endif %}
+          >
+            <a class="nav-link text-white font-weight-bold" href="{% url 'about' %}">About Us</a>
+          </li>
+          <li
+            {% if 'listings' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item mr-3"
+            {% endif %}
+          >
+            <a class="nav-link text-white font-weight-bold" href=#>Our Address</a>
+          </li>
+          <li
+            {% if 'about' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item mr-3"
+            {% endif %}
+          >
+            <a class="nav-link text-white font-weight-bold"  href="{% url 'services' %}" >Our Services+ </a>
+          </li>
+          <li
+          {% if 'about' in request.path %}
+            class="nav-item active mr-3"
+          {% else %}
+            class="nav-item mr-3"
+          {% endif %}
+        >
+          <a class="nav-link text-white font-weight-bold" href="{%url 'engagement'%}" >Our Engagement </a>
+        </li>
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <li
+            {% if 'dashboard' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item mr-3"
+            {% endif %}
+            >
+              <a class="nav-link" >
+               Welcome {{ user.username }} (Dashboard)</a>
+            </li>
+            <li class="nav-item mr-3">
+              <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+              <form  method="POST" id="logout">
+                {% csrf_token %}
+                <input type="hidden">
+              </form>
+            </li>
+          {% else %}
+ 
+          <li {% if 'login' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+            <div data-v-5e260a82="" class="absolute right-0 top-0 mt-8 mr-8 flex">
+              <!-- Earth icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12Z M13 2.04932C13 2.04932 16 5.99994 16 11.9999C16 17.9999 13 21.9506 13 21.9506 M11 21.9506C11 21.9506 8 17.9999 8 11.9999C8 5.99994 11 2.04932 11 2.04932 M2.62964 15.5H21.3704 M2.62964 8.5H21.3704"></path>
+              </svg>
+          
+              <!-- Language links -->
+              <a href="/fr/connexion" class="hover:text-gray-700 text-gray-700 ml-1">FR <span class="mx-0.5"></span></a>
+              <a aria-current="page" href="/en/login" class="font-bold router-link-exact-active hover:text-gray-700 text-gray-700">EN <!----></a>
+            </div>
+          </li>
+          
+        <li {% if 'login' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3" {% endif %}>
+            <a class="nav-link text-white font-weight-bold" href="{% url 'login' %}">
+                <i>log in</i>
+            </a>
+        </li>
+        
+      
+          {% endif %}
+        </ul>
+      </div>
+
+  </nav>
